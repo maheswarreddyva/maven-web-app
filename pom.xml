@@ -4,57 +4,31 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.devops</groupId>
-    <artifactId>devops-web-app</artifactId>
+    <groupId>com.example</groupId>
+    <artifactId>simple-devops-web-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>DevOps Web Application</name>
-    <description>A simple Java web application for DevOps practice</description>
+    <name>Simple DevOps Web App</name>
+    <description>Simple Java Web App to practice DevOps</description>
 
     <!-- Properties -->
     <properties>
         <jdk.version>17</jdk.version>
-        <spring.version>5.3.10</spring.version>
         <sonar.host.url>http://172.31.21.117:9000</sonar.host.url> <!-- SonarQube URL -->
-        <sonar.login>squ_b34befc9c401148ed8197f27268d023a9289d710</sonar.login> <!-- Your SonarQube token -->
-        <nexus.url>http://172.31.23.255:8081/repository/maven-releases/</nexus.url> <!-- Nexus Repository URL -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <sonar.login>squ_b34befc9c401148ed8197f27268d023a9289d710</sonar.login> <!-- SonarQube Token -->
+        <nexus.repo.url>http://172.31.23.255:8081/repository/maven-releases/</nexus.repo.url> <!-- Nexus Release Repository -->
+        <nexus.snapshot.repo.url>http://172.31.23.255:8081/repository/maven-snapshots/</nexus.snapshot.repo.url> <!-- Nexus Snapshot Repository -->
     </properties>
 
     <!-- Dependencies -->
     <dependencies>
+        <!-- Servlet API dependency -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- Spring Dependencies -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!-- Log4j for logging -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.14.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.14.1</version>
         </dependency>
 
         <!-- JUnit for testing -->
@@ -65,41 +39,20 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Mockito for mocking in tests -->
+        <!-- SonarQube plugin for integration -->
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>3.7.7</version>
-            <scope>test</scope>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.9.1.2184</version>
         </dependency>
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>nexus</id>
-            <name>Nexus Repository</name>
-            <url>${nexus.url}</url>
-        </repository>
-    </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <name>Nexus Repository Releases</name>
-            <url>${nexus.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Nexus Repository Snapshots</name>
-            <url>http://172.31.23.255:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
+    <!-- Build Configuration -->
     <build>
-        <finalName>devops-web-app</finalName>
+        <finalName>simple-devops-web-app</finalName>
 
         <plugins>
-            <!-- Compiler plugin for Java 17 -->
+            <!-- Maven Compiler Plugin for Java 17 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -110,14 +63,14 @@
                 </configuration>
             </plugin>
 
-            <!-- Maven WAR plugin for packaging the application as WAR -->
+            <!-- Maven WAR Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.1</version>
             </plugin>
 
-            <!-- Jetty plugin for running locally during development -->
+            <!-- Maven Jetty Plugin (for local deployment) -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -130,7 +83,7 @@
                 </configuration>
             </plugin>
 
-            <!-- SonarQube plugin for code quality analysis -->
+            <!-- SonarQube Plugin -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
@@ -139,8 +92,9 @@
         </plugins>
     </build>
 
+    <!-- Profiles -->
     <profiles>
-        <!-- SonarQube Profile -->
+        <!-- SonarQube profile for analysis -->
         <profile>
             <id>sonar</id>
             <activation>
@@ -157,4 +111,18 @@
             </build>
         </profile>
     </profiles>
+
+    <!-- Distribution Management (Nexus Repositories) -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Releases Repository</name>
+            <url>${nexus.repo.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshots Repository</name>
+            <url>${nexus.snapshot.repo.url}</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
