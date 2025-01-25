@@ -113,16 +113,16 @@
     </profiles>
 
     <!-- Distribution Management (Nexus Repositories) -->
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <name>Nexus Releases Repository</name>
-            <url>${nexus.repo.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Nexus Snapshots Repository</name>
-            <url>${nexus.snapshot.repo.url}</url>
-        </snapshotRepository>
-    </distributionManagement>
+<distributionManagement>
+    <repository>
+        <id>nexus-snapshots</id>
+        <name>My Snapshot Repository</name>
+        <url>http://172.31.23.255:8081/repository/maven-snapshots/</url>
+    </repository>
+    <snapshotRepository>
+        <id>nexus-snapshots</id>
+        <name>My Snapshot Repository</name>
+        <url>http://172.31.23.255:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+</distributionManagement>
 </project>
