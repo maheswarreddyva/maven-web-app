@@ -4,28 +4,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>my-devops-web-app</artifactId>
+    <groupId>com.devops</groupId>
+    <artifactId>devops-web-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>My DevOps Web Application</name>
+    <name>DevOps Web Application</name>
     <description>A simple Java web application for DevOps practice</description>
 
     <!-- Properties -->
     <properties>
         <jdk.version>17</jdk.version>
         <spring.version>5.3.10</spring.version>
-        <log4j.version>2.14.1</log4j.version> <!-- Correct Log4j version -->
         <sonar.host.url>http://172.31.21.117:9000</sonar.host.url> <!-- SonarQube URL -->
         <sonar.login>squ_b34befc9c401148ed8197f27268d023a9289d710</sonar.login> <!-- Your SonarQube token -->
+        <nexus.url>http://172.31.23.255:8081/repository/maven-releases/</nexus.url> <!-- Nexus Repository URL -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <!-- Dependencies -->
     <dependencies>
-        <!-- Servlet API dependency -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -33,21 +32,29 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Spring dependencies -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+        <!-- Spring Dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Log4j for logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.14.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.14.1</version>
         </dependency>
 
         <!-- JUnit for testing -->
@@ -56,18 +63,6 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Log4j2 for logging (updated version) -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
         </dependency>
 
         <!-- Mockito for mocking in tests -->
@@ -79,32 +74,29 @@
         </dependency>
     </dependencies>
 
-    <!-- Repositories -->
     <repositories>
         <repository>
             <id>nexus</id>
-            <name>Remote Repo</name>
-            <url>http://172.31.23.255:8081/repository/group-repo/</url>
+            <name>Nexus Repository</name>
+            <url>${nexus.url}</url>
         </repository>
     </repositories>
 
-    <!-- Distribution Management -->
     <distributionManagement>
         <repository>
-            <id>nexus</id>
-            <name>Walmart Releases Nexus Repository</name>
-            <url>http://172.31.23.255:8081/repository/release-repo/</url>
+            <id>nexus-releases</id>
+            <name>Nexus Repository Releases</name>
+            <url>${nexus.url}</url>
         </repository>
         <snapshotRepository>
-            <id>nexus</id>
-            <name>Walmart Snapshot Nexus Repository</name>
-            <url>http://172.31.23.255:8081/repository/snapshot-repo/</url>
+            <id>nexus-snapshots</id>
+            <name>Nexus Repository Snapshots</name>
+            <url>http://172.31.23.255:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
-    <!-- Build Section -->
     <build>
-        <finalName>my-devops-web-app</finalName>
+        <finalName>devops-web-app</finalName>
 
         <plugins>
             <!-- Compiler plugin for Java 17 -->
@@ -118,14 +110,14 @@
                 </configuration>
             </plugin>
 
-            <!-- Maven WAR plugin -->
+            <!-- Maven WAR plugin for packaging the application as WAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.1</version>
             </plugin>
 
-            <!-- Jetty plugin for local web server deployment -->
+            <!-- Jetty plugin for running locally during development -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -138,7 +130,7 @@
                 </configuration>
             </plugin>
 
-            <!-- SonarQube plugin for integration -->
+            <!-- SonarQube plugin for code quality analysis -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
@@ -147,9 +139,8 @@
         </plugins>
     </build>
 
-    <!-- Profiles -->
     <profiles>
-        <!-- SonarQube profile for analysis -->
+        <!-- SonarQube Profile -->
         <profile>
             <id>sonar</id>
             <activation>
