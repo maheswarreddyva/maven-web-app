@@ -22,9 +22,8 @@
                 <spring.version>5.1.2.RELEASE</spring.version>
                 <junit.version>4.11</junit.version>
                 <log4j.version>1.2.17</log4j.version>
-                <sonar.host.url>http://10.0.5.201:9000/</sonar.host.url>
-                <sonar.login>admin</sonar.login>
-                <sonar.password>admin123</sonar.password>
+                <sonar.host.url>http://172.31.21.117:9000</sonar.host.url>
+                <sonar.login>squ_b34befc9c401148ed8197f27268d023a9289d710</sonar.login>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
                 <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         </properties>
@@ -92,21 +91,30 @@
 		</dependency>	
 	</dependencies>	
 
-  <distributionManagement>
-      <repository>
-        <id>nexus</id>
-        <name>Landmark Technologies Releases Nexus Repository</name>
-        <url>http://98.81.159.237:8081/repository/tesla-releases/</url>
-      </repository>
-      
-      <snapshotRepository>
-        <id>nexus</id>
-        <name>Landmark Technologies Snapshot Nexus Repository </name>
-        <url>http://98.81.159.237:8081/repository/tesla-snapshots/</url>
-      </snapshotRepository>
-      
-  </distributionManagement>
-	
+		<repositories>
+                <repository>
+                        <id>nexus</id>
+                        <name>Remote Repo</name>
+                        <url>http://172.31.23.255:8081/repository/group-repo/</url>
+                </repository>
+		</repositories>
+
+
+    <distributionManagement>
+
+            <repository>
+              <id>nexus</id>
+              <name>Walmart Releases Nexus Repository</name>
+              <url>http://172.31.23.255:8081/repository/release-repo/</url>
+            </repository>
+
+            <snapshotRepository>
+              <id>nexus</id>
+              <name>Walmart Snapshot Nexus Repository </name>
+              <url>http://172.31.23.255:8081/repository/snapshot-repo/</url>
+            </snapshotRepository>
+
+	</distributionManagement>	
 	<build>
 		<finalName>tesla</finalName>
 		
