@@ -16,7 +16,7 @@
     <properties>
         <jdk.version>17</jdk.version>
         <spring.version>5.3.10</spring.version>
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>2.14.1</log4j.version> <!-- Correct Log4j version -->
         <sonar.host.url>http://172.31.21.117:9000</sonar.host.url> <!-- SonarQube URL -->
         <sonar.login>squ_b34befc9c401148ed8197f27268d023a9289d710</sonar.login> <!-- Your SonarQube token -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -58,16 +58,16 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Log4j for logging -->
+        <!-- Log4j2 for logging (updated version) -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.14.1</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.14.1</version>
+            <version>${log4j.version}</version>
         </dependency>
 
         <!-- Mockito for mocking in tests -->
