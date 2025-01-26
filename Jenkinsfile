@@ -24,7 +24,7 @@ pipeline {
         stage('build') {
             steps {
                 sh '''
-                mvn -v
+                date
                 mvn clean package
                 '''
             }
