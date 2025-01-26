@@ -6,8 +6,9 @@ pipeline {
     // }
     
     triggers {
-        // cron('* * * * *') // Runs every minute (Build Periodically), Build trigger periodically Irrespective of code pushing
-        pollSCM('* * * * *') // Polls the SCM every minute
+        // cron('* * * * *') // Build Periodically: Runs every minute , Build trigger periodically Irrespective of code pushing
+        // pollSCM('* * * * *') // PollSCM: Polls the SCM every minute
+        githubPush() // GitHub webhooks: •	Build trigger as soon as push the code 
     }
 
     
