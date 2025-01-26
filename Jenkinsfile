@@ -6,7 +6,8 @@ pipeline {
     // }
     
     triggers {
-        cron('* * * * *') // Runs every minute (Build Periodically), Build trigger periodically Irrespective of code pushing
+        // cron('* * * * *') // Runs every minute (Build Periodically), Build trigger periodically Irrespective of code pushing
+        pollSCM('* * * * *') // Polls the SCM every minute
     }
 
     
