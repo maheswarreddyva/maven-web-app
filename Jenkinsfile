@@ -18,6 +18,11 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
         stage('clone') {
             steps {
                 git credentialsId: 'github_creds', url: 'https://github.com/maheswarreddyva/maven-web-app.git'
