@@ -20,7 +20,9 @@ pipeline {
     stages {
         stage('Clean Workspace') {
             steps {
+                sh "ls"
                 cleanWs()
+                sh "ls"
             }
         }
         stage('clone') {
