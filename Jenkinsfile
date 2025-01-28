@@ -11,6 +11,9 @@ pipeline {
         githubPush() // GitHub webhooks: •	Build trigger as soon as push the code 
     }
 
+    options {
+        timestamps() // Add this line
+    }
     
     environment {
         // Define your SonarQube server in this block
