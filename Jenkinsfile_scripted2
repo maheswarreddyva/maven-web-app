@@ -1,0 +1,19 @@
+node('node1') {
+    try {
+        stage('clone') {
+            git 'git url'
+        }
+
+        stage('build') {
+            sh 'mvn clean package'
+        }
+    } catch (Exception e) {
+        stage('error') {
+            echo "Error occurred: ${e.message}"
+        }
+    } finally {
+        stage('always') {
+            echo 'This will always run, regardless of success or failure'
+        }
+    }
+}

@@ -1,0 +1,33 @@
+node {
+    def mvnHome
+
+    try {
+        stage('Initialize') {
+            mvnHome = tool 'Maven'  // Assume Maven is configured in Jenkins
+        }
+
+        stage('Checkout') {
+            git 'https://github.com/example/repo.git'
+        }
+
+        stage('Build') {
+            sh "${mvnHome}/bin/mvn clean package"
+        }
+
+        stage('Test') {
+            sh "${mvnHome}/bin/mvn test"
+        }
+
+        stage('Deploy') {
+            echo 'Deploying application...'
+            sh 'scp target/*.jar user@server:/deploy/path'
+        }
+
+        echo "Pipeline completed successfully!"
+    } catch (Exception e) {
+        echo "Pipeline failed: ${e.message}"
+        currentBuild.result = 'FAILURE'
+    } finally {
+        echo "Cleaning up resources..."
+    }
+}
